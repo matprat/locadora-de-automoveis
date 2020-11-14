@@ -1,4 +1,4 @@
-package com.bcopstein;
+package com.bcopstein.dominio.entidades;
 
 public class Carro {
     private String placa;

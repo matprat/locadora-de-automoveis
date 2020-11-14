@@ -1,4 +1,4 @@
-package com.bcopstein;
+package com.bcopstein.utils;
 
 import java.util.Calendar;
 

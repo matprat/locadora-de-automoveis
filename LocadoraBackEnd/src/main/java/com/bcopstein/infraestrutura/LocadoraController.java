@@ -1,8 +1,12 @@
-package com.bcopstein;
+package com.bcopstein.infraestrutura;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.bcopstein.dominio.entidades.Carro;
+import com.bcopstein.dominio.dtos.CarroCustoDTO;
+import com.bcopstein.dominio.dtos.FiltroDTO;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +36,7 @@ public class LocadoraController {
   @GetMapping("/teste")
   @CrossOrigin(origins = "*")
   public String teste() {
-    return "Testado com sucesso";
+    return "Testado com sucesso!!";
   }
 
   @GetMapping("/carrosDisponiveis")

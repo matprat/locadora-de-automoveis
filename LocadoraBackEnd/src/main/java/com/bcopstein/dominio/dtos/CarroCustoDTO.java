@@ -1,4 +1,6 @@
-package com.bcopstein;
+package com.bcopstein.dominio.dtos;
+
+import com.bcopstein.utils.DataLocal;
 
 public class CarroCustoDTO {
     private DataLocal inicioLocacao;
