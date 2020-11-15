@@ -1,6 +1,9 @@
 package com.bcopstein.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DataLocal {
     private int dia = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
@@ -29,6 +32,17 @@ public class DataLocal {
 
     public int getAno() {
         return ano;
+    }
+    
+    public Date getDataCompleta(String dataRecebida) {
+    	SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date dataFormatada = formatador.parse(dataRecebida);
+			return dataFormatada;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+    	return null;
     }
 
     @Override

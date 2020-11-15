@@ -1,15 +1,22 @@
 package com.bcopstein.dominio.entidades;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Carro {
+	@Id
     private String placa;
     private String marca;
     private String modelo;
     private boolean arcondicionado;
     private boolean direcao;
     private boolean cambioautomatico;
+    private boolean disponivel;
 
-    public Carro(String placa, String marca, String modelo, boolean arcondicionado, boolean direcao,
-            boolean cambioautomatico) {
+    public Carro(String placa, String marca, String modelo, boolean arcondicionado, boolean direcao, boolean cambioautomatico) {
         this.placa = placa;
         this.marca = marca;
         this.modelo = modelo;
@@ -17,6 +24,8 @@ public class Carro {
         this.direcao = direcao;
         this.cambioautomatico = cambioautomatico;
     }
+    
+    protected Carro(){}
 
     public String getPlaca() {
         return placa;
@@ -40,6 +49,10 @@ public class Carro {
 
     public boolean isCambioautomatico() {
         return cambioautomatico;
+    }
+    
+    public boolean getDIsponivel() {
+    	return this.disponivel;
     }
 
     @Override

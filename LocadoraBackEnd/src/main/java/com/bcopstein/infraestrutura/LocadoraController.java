@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.bcopstein.dominio.entidades.Carro;
+import com.bcopstein.dominio.interfaces.IRepositorioCarros;
 import com.bcopstein.dominio.dtos.CarroCustoDTO;
 import com.bcopstein.dominio.dtos.FiltroDTO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,18 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/locadora")
 public class LocadoraController {
-  private final List<Carro> carros;
+  private IRepositorioCarros carros;
 
-  public LocadoraController() {
-    // Cria o banco de carros
-    carros = new ArrayList<>();
-    carros.add(new Carro("ABC123", "ACME", "M1", false, false, false));
-    carros.add(new Carro("ABC129", "ACME", "M4", false, false, false));
-    carros.add(new Carro("ABC124", "ACME", "M2", true, false, false));
-    carros.add(new Carro("ABC125", "ACME", "M1", true, true, false));
-    carros.add(new Carro("ABC126", "ACME", "M2", true, true, true));
-    carros.add(new Carro("ABC128", "ACME", "M4", true, true, true));
-    carros.add(new Carro("ABC127", "ACME", "M3", false, true, true));
+  @Autowired
+  public LocadoraController(IRepositorioCarros carros) {
+	  this.carros = carros;
   }
 
   @GetMapping("/teste")
@@ -42,9 +37,10 @@ public class LocadoraController {
   @GetMapping("/carrosDisponiveis")
   @CrossOrigin(origins = "*")
   public List<CarroCustoDTO> carrosDisponiveis(FiltroDTO filtro) {
+    System.out.println(filtro);
     // Está selecionando apenas pelos equipamentos
     // Não está verificando se o carro está livre naquelas datas
-    List<Carro> disponiveis = carros.stream()
+    List<Carro> disponiveis = carros.todos().stream()
       .filter(c->c.isArcondicionado() == filtro.isArcondicionado())
       .filter(c->c.isDirecao() == filtro.isDirecao())
       .filter(c->c.isCambioautomatico() == filtro.isCambio())
@@ -62,7 +58,7 @@ public class LocadoraController {
                                         c.isCambioautomatico(),
                                         1000.0, // Total das diárias
                                         100.0,  // Custo do seguro
-                                        200.0,   // Total do desconto
+                                        200.0,  // Total do desconto
                                         900.0)); // Valor a pagar
     });
     return informacoes;
