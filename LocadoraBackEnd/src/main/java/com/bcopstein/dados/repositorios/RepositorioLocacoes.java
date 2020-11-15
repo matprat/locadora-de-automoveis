@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bcopstein.dados.armazenamentoPersistente.carros.TabelaLocacoesH2BD;
+import com.bcopstein.dados.armazenamentoPersistente.locacoes.TabelaLocacoesH2BD;
 import com.bcopstein.dominio.entidades.Locacao;
 import com.bcopstein.dominio.interfaces.IRepositorioLocacoes;
 

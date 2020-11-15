@@ -1,4 +1,4 @@
-package com.bcopstein.dados.armazenamentoPersistente.carros;
+package com.bcopstein.dados.armazenamentoPersistente.locacoes;
 
 import java.util.List;
 
