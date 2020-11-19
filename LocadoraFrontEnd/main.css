@@ -26,7 +26,7 @@ h1 {
 
 /* Filtros */
 #form_filtros button:active {
-    background: #47a57f;
+    background: #9ad3bc;
 }
 
 #form_filtros button:hover:not(:active) {
@@ -35,7 +35,7 @@ h1 {
 
 #form_filtros button {
     text-transform: uppercase;
-    background: #9ad3bc;
+    background: #47a57f;
     border-radius: 5px;
     margin-top: 32px;
     font-size: 14px;
