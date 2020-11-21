@@ -12,7 +12,7 @@ public class CarroCustoDTO {
     private boolean direcao;
     private boolean cambio;    
     private double custoLocacao;
-    private double seguro;
+    private double seguro; // boolean
     private double desconto;
     private double totalPagar;
 
