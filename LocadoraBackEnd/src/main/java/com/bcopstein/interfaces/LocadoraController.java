@@ -13,23 +13,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bcopstein.casosDeUso.ControleDeCarros;
+import com.bcopstein.casosDeUso.ControleDeLocacoes;
 import com.bcopstein.entidades.Carro;
-import com.bcopstein.entidades.IRepositorioCarros;
+
 
 @RestController
 @RequestMapping("/locadora")
 public class LocadoraController {
-  private IRepositorioCarros carros;
+	
+  private ControleDeLocacoes controleDeLocacoes;
+  private ControleDeCarros controleDeCarros;
 
   @Autowired
-  public LocadoraController(IRepositorioCarros carros) {
-	  this.carros = carros;
+  public LocadoraController(ControleDeLocacoes controleDeLocacoes, ControleDeCarros controleDeCarros) {
+	  this.controleDeLocacoes = controleDeLocacoes;
+	  this.controleDeCarros = controleDeCarros;
   }
 
   @GetMapping("/teste")
   @CrossOrigin(origins = "*")
   public String teste() {
-    return "Testado com sucesso!!";
+    return controleDeLocacoes.teste();
   }
 
   @GetMapping("/carrosDisponiveis")
@@ -38,7 +43,7 @@ public class LocadoraController {
     System.out.println(filtro);
     // Está selecionando apenas pelos equipamentos
     // Não está verificando se o carro está livre naquelas datas
-    List<Carro> disponiveis = carros.todos().stream()
+    List<Carro> disponiveis = this.controleDeCarros.todos().stream()
       .filter(c->c.isArcondicionado() == filtro.isArcondicionado())
       .filter(c->c.isDirecao() == filtro.isDirecao())
       .filter(c->c.isCambioautomatico() == filtro.isCambio())

@@ -1,13 +1,12 @@
 package com.bcopstein.entidades;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.bcopstein.interfaces.CarroDTO;
-import com.bcopstein.interfaces.FiltroDTO;
+import org.springframework.stereotype.Component;
 
 
+@Component
 public class CarroService {
 	
 	private IRepositorioCarros repositorio;
@@ -15,6 +14,10 @@ public class CarroService {
 	@Autowired
 	public CarroService(IRepositorioCarros repositorio) {
 		this.repositorio = repositorio;
+	}
+	
+	public Collection<Carro> todos() {
+		return this.repositorio.todos();
 	}
 	
 }

@@ -3,12 +3,13 @@ package com.bcopstein.interfaces;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.bcopstein.entidades.IRepositorioLocacoes;
 import com.bcopstein.entidades.Locacao;
 import com.bcopstein.entidades.TabelaLocacoesH2BD;
 
-
+@Component
 public class RepositorioLocacoes implements IRepositorioLocacoes {
 	
 	private TabelaLocacoesH2BD database;

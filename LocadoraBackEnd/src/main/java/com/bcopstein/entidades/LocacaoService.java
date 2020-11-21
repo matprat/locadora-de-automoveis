@@ -3,18 +3,19 @@ package com.bcopstein.entidades;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.bcopstein.interfaces.CarroCustoDTO;
-import com.bcopstein.interfaces.CarroDTO;
+import org.springframework.stereotype.Component;
 
 
+@Component
 public class LocacaoService {
 	
-private IRepositorioLocacoes repositorio;
+	private IRepositorioLocacoes locacoes;
+	private IRepositorioCarros carros;
 	
 	@Autowired
-	public LocacaoService(IRepositorioLocacoes repositorio) {
-		this.repositorio = repositorio;
+	public LocacaoService(IRepositorioLocacoes locacoes, IRepositorioCarros carros) {
+		this.locacoes = locacoes;
+		this.carros = carros;
 	}
 	
 }
