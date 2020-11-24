@@ -51,8 +51,12 @@ public class Carro {
         return cambioautomatico;
     }
     
-    public boolean getDIsponivel() {
+    public boolean getDisponivel() {
     	return this.disponivel;
+    }
+    
+    public void setDisponivel(boolean novoStatus) {
+    	this.disponivel = novoStatus;
     }
 
     @Override
