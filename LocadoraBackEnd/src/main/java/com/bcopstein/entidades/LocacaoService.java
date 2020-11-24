@@ -41,7 +41,7 @@ public class LocacaoService {
 					carroCustoDTO.getSeguro(),
 					desconto,
 					totalAPagar);
-			this.factoryDesconto.getRegraDesconto().calcular(novaLocacao);
+			this.aplicaDesconto(novaLocacao);
 			this.locacoes.salvar(novaLocacao);
 			return true;
 		} catch(Exception e) {
@@ -54,13 +54,8 @@ public class LocacaoService {
 		return this.locacoes.todos();
 	}
 	
-	private void aplicaDesconto() {
-		
+	private void aplicaDesconto(Locacao novaLocacao) {
+		this.factoryDesconto.getRegraDesconto().calcular(novaLocacao);
 	}
-	
-	 private double custoLocacao;
-	    private double seguro;
-	    private double desconto;
-	    private double totalPagar;
 	
 }
