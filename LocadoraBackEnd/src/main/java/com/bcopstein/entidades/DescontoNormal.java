@@ -2,15 +2,15 @@ package com.bcopstein.entidades;
 
 public class DescontoNormal {
 	
-	private double percentual = 0.05;
+	private RegraSeguro regraSeguro = new SeguroOuro();
 	
 	public void calcular(Locacao locacao) {
 		locacao.setDesconto(locacao.getSeguro());
 		locacao.setTotalPagar(locacao.getCustoLocacao() - locacao.getDesconto());
 	}
 	
-	public double getPercentual() {
-		return this.percentual;
+	public RegraSeguro getRegra() {
+		return this.regraSeguro;
 	}
 
 }

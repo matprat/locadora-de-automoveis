@@ -99,6 +99,10 @@ public class Locacao {
 	public double getSeguro() {
 		return seguro;
 	}
+	
+	public void setSeguro(double novoSeguro) {
+		this.seguro = novoSeguro;
+	}
 
 	public double getDesconto() {
 		return desconto;
