@@ -20,4 +20,12 @@ public class CarroService {
 		return this.repositorio.todos();
 	}
 	
+	public Carro buscaCarroPorPlaca(String placa) {
+		return this.repositorio.pesquisarPorPlaca(placa);
+	}
+
+	public void atualiza(Carro carro) {
+		this.repositorio.salvar(carro);
+	}
+	
 }

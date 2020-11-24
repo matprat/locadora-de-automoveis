@@ -1,6 +1,7 @@
 package com.bcopstein.interfaces;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bcopstein.casosDeUso.ControleDeCarros;
 import com.bcopstein.casosDeUso.ControleDeLocacoes;
 import com.bcopstein.entidades.Carro;
+import com.bcopstein.entidades.Locacao;
 
 
 @RestController
@@ -33,7 +35,7 @@ public class LocadoraController {
 
   @GetMapping("/teste")
   @CrossOrigin(origins = "*")
-  public String teste() {
+  public Collection<Locacao> teste() {
     return controleDeLocacoes.teste();
   }
 
@@ -70,8 +72,7 @@ public class LocadoraController {
   @PostMapping("/confirmaLocacao")
   @CrossOrigin(origins = "*")
   public boolean confirmaLocacao(@RequestBody final CarroCustoDTO carro) {
-    // Está confirmando qualquer coisa
-    return true;
+    return this.controleDeLocacoes.alugarCarro(carro);
   }
 
 }
