@@ -33,13 +33,13 @@ public class LocadoraController {
 	  this.controleDeCarros = controleDeCarros;
   }
 
-  @GetMapping("/todasLocacoes")
+  @GetMapping("/todas-locacoes")
   @CrossOrigin(origins = "*")
   public Collection<CarroCustoDTO> todasLocacoes() {
     return this.controleDeLocacoes.todasLocacoes();
   }
 
-  @GetMapping("/carrosDisponiveis")
+  @GetMapping("/carros-disponiveis")
   @CrossOrigin(origins = "*")
   public List<CarroCustoDTO> carrosDisponiveis(FiltroDTO filtro) {
     // Está selecionando apenas pelos equipamentos
@@ -68,7 +68,7 @@ public class LocadoraController {
     return informacoes;
   }
 
-  @PostMapping("/confirmaLocacao")
+  @PostMapping("/confirma-locacao")
   @CrossOrigin(origins = "*")
   public boolean confirmaLocacao(@RequestBody final CarroCustoDTO carro) {
     return this.controleDeLocacoes.alugarCarro(carro);
