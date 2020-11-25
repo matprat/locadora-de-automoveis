@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.bcopstein.interfaces.CarroCustoDTO;
 import com.bcopstein.interfaces.DataLocal;
 
 
@@ -52,12 +53,20 @@ public class Locacao {
     	return this.id;
     }
     
-    public Date getInicioLocacao() {
-        return this.inicioLocacao;
+    public DataLocal getInicioLocacao() {
+    	DataLocal data = new DataLocal();
+    	data.setDia(this.inicioLocacao.getDay());
+    	data.setMes(this.inicioLocacao.getMonth());
+    	data.setAno(this.inicioLocacao.getYear());
+        return data;
     }
     
-    public Date getFimLocacao() {
-        return this.fimLocacao;
+    public DataLocal getFimLocacao() {
+    	DataLocal data = new DataLocal();
+    	data.setDia(this.inicioLocacao.getDay());
+    	data.setMes(this.inicioLocacao.getMonth());
+    	data.setAno(this.inicioLocacao.getYear());
+        return data;
     }
    
     public String getPlaca() {
@@ -118,5 +127,20 @@ public class Locacao {
 
 	public void setTotalPagar(double totalPagar) {
 		this.totalPagar = totalPagar;
+	}
+	
+	public CarroCustoDTO toCarroCustoDTO() {
+		return new CarroCustoDTO(this.getInicioLocacao(),
+				this.getFimLocacao(),
+				this.getPlaca(),
+				this.getMarca(),
+				this.getModelo(),
+				this.isArcondicionado(),
+				this.isDirecao(),
+				this.isCambioautomatico(),
+				this.getCustoLocacao(),
+				this.getSeguro(),
+				this.getDesconto(),
+				this.getTotalPagar());
 	}
 }
