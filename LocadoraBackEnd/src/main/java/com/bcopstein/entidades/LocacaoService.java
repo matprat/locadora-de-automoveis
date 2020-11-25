@@ -1,5 +1,6 @@
 package com.bcopstein.entidades;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -50,8 +51,13 @@ public class LocacaoService {
 		return false;
 	}
 	
-	public Collection<Locacao> todos() {
-		return this.locacoes.todos();
+	public List<CarroCustoDTO> todos() {
+		Collection<Locacao> locacoesCadastradas = this.locacoes.todos();
+		List<CarroCustoDTO> todasLocacoes = new ArrayList<>(locacoesCadastradas.size());
+		for(Locacao locacao: locacoesCadastradas) {
+			todasLocacoes.add(locacao.toCarroCustoDTO());
+		}
+		return todasLocacoes;
 	}
 	
 	private void aplicaDesconto(Locacao novaLocacao) {

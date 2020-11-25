@@ -1,7 +1,9 @@
 package com.bcopstein.casosDeUso;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import com.bcopstein.entidades.Carro;
 import com.bcopstein.entidades.CarroService;
@@ -25,10 +27,6 @@ public class ControleDeLocacoes {
 	public ControleDeLocacoes(LocacaoService servicoLocacao, CarroService servicoCarro) {
 		this.servicoDeLocacao = servicoLocacao;
 		this.servicoDeCarro = servicoCarro;
-	}
-	
-	public Collection<Locacao> teste() {
-		return this.servicoDeLocacao.todos();
 	}
 	
 	public Collection<CarroCustoDTO> pesquisarCarrosDisponiveis(FiltroDTO filtro) {
@@ -64,9 +62,8 @@ public class ControleDeLocacoes {
 		return false;
 	}
 	
-	public Collection<CarroCustoDTO> pesquisarTodasLocacoes() {
-		// TO DO
-		return null;
+	public List<CarroCustoDTO> todasLocacoes() {
+		return this.servicoDeLocacao.todos();
 	}
 	
 	private boolean periodoDeLocacaoIsValido(Date dataInicial, Date dataFinal) {

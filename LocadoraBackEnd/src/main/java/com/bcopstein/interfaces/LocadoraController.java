@@ -33,16 +33,15 @@ public class LocadoraController {
 	  this.controleDeCarros = controleDeCarros;
   }
 
-  @GetMapping("/teste")
+  @GetMapping("/todasLocacoes")
   @CrossOrigin(origins = "*")
-  public Collection<Locacao> teste() {
-    return controleDeLocacoes.teste();
+  public Collection<CarroCustoDTO> todasLocacoes() {
+    return this.controleDeLocacoes.todasLocacoes();
   }
 
   @GetMapping("/carrosDisponiveis")
   @CrossOrigin(origins = "*")
   public List<CarroCustoDTO> carrosDisponiveis(FiltroDTO filtro) {
-    System.out.println(filtro);
     // Está selecionando apenas pelos equipamentos
     // Não está verificando se o carro está livre naquelas datas
     List<Carro> disponiveis = this.controleDeCarros.todos().stream()
