@@ -1,6 +1,7 @@
 package com.bcopstein.interfaces;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,32 +14,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bcopstein.casosDeUso.ControleDeCarros;
+import com.bcopstein.casosDeUso.ControleDeLocacoes;
 import com.bcopstein.entidades.Carro;
-import com.bcopstein.entidades.IRepositorioCarros;
+import com.bcopstein.entidades.Locacao;
+
 
 @RestController
 @RequestMapping("/locadora")
 public class LocadoraController {
-  private IRepositorioCarros carros;
+	
+  private ControleDeLocacoes controleDeLocacoes;
+  private ControleDeCarros controleDeCarros;
 
   @Autowired
-  public LocadoraController(IRepositorioCarros carros) {
-	  this.carros = carros;
+  public LocadoraController(ControleDeLocacoes controleDeLocacoes, ControleDeCarros controleDeCarros) {
+	  this.controleDeLocacoes = controleDeLocacoes;
+	  this.controleDeCarros = controleDeCarros;
   }
 
-  @GetMapping("/teste")
+  @GetMapping("/todas-locacoes")
   @CrossOrigin(origins = "*")
-  public String teste() {
-    return "Testado com sucesso!!";
+  public Collection<CarroCustoDTO> todasLocacoes() {
+    return this.controleDeLocacoes.todasLocacoes();
   }
 
-  @GetMapping("/carrosDisponiveis")
+  @GetMapping("/carros-disponiveis")
   @CrossOrigin(origins = "*")
   public List<CarroCustoDTO> carrosDisponiveis(FiltroDTO filtro) {
-    System.out.println(filtro);
     // Está selecionando apenas pelos equipamentos
     // Não está verificando se o carro está livre naquelas datas
-    List<Carro> disponiveis = carros.todos().stream()
+    List<Carro> disponiveis = this.controleDeCarros.todos().stream()
       .filter(c->c.isArcondicionado() == filtro.isArcondicionado())
       .filter(c->c.isDirecao() == filtro.isDirecao())
       .filter(c->c.isCambioautomatico() == filtro.isCambio())
@@ -62,11 +68,10 @@ public class LocadoraController {
     return informacoes;
   }
 
-  @PostMapping("/confirmaLocacao")
+  @PostMapping("/confirma-locacao")
   @CrossOrigin(origins = "*")
   public boolean confirmaLocacao(@RequestBody final CarroCustoDTO carro) {
-    // Está confirmando qualquer coisa
-    return true;
+    return this.controleDeLocacoes.alugarCarro(carro);
   }
 
 }

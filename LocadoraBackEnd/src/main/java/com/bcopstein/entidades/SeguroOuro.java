@@ -2,21 +2,9 @@ package com.bcopstein.entidades;
 
 public class SeguroOuro implements RegraSeguro {
 	
-	private String nome;
-	private double valor;
-
 	@Override
-	public double calcular(double subtotal) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public String getNome() {
-		return this.nome;
-	}
-
-	public double getValor() {
-		return this.valor;
+	public void valida(Locacao locacao) {
+		locacao.setSeguro(100);
 	}
 
 }

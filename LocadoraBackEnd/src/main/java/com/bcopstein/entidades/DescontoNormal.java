@@ -2,8 +2,15 @@ package com.bcopstein.entidades;
 
 public class DescontoNormal {
 	
-	public double calcular(double subTotal) {
-		return subTotal*0;
+	private RegraSeguro regraSeguro = new SeguroOuro();
+	
+	public void calcular(Locacao locacao) {
+		locacao.setDesconto(locacao.getSeguro());
+		locacao.setTotalPagar(locacao.getCustoLocacao() - locacao.getDesconto());
+	}
+	
+	public RegraSeguro getRegra() {
+		return this.regraSeguro;
 	}
 
 }

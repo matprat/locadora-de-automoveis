@@ -1,5 +1,6 @@
 package com.bcopstein.interfaces;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,10 +35,24 @@ public class DataLocal {
         return ano;
     }
     
-    public Date getDataCompleta(String dataRecebida) {
+    public Date toDateFormatDatabase() {
     	SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			Date dataFormatada = formatador.parse(dataRecebida);
+			String dataString = this.getAno() + "-" + this.getMes() + "-" + this.getDia();
+			Date dataFormatada = formatador.parse(dataString);
+			long time = dataFormatada.getTime();
+			return new Timestamp(time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+    	return null;
+    }
+    
+    public Date toDate() {
+    	SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			String dataString = this.getDia() + "/" + this.getMes() + "/" + this.getAno();
+			Date dataFormatada = formatador.parse(dataString);
 			return dataFormatada;
 		} catch (ParseException e) {
 			e.printStackTrace();
