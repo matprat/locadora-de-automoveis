@@ -58,7 +58,19 @@ public class ControleDeLocacoes {
 		return false;
 	}
 	
-    public boolean devolveCarro(String placa){
+    public boolean devolveCarro(CarroCustoDTO carroCustoDTO){
+		try{
+			Date inicioLocacao = carroCustoDTO.getInicioLocacao().toDate();
+			Date fimLocacao = carroCustoDTO.getFimLocacao().toDate();
+
+			if(periodoDeLocacaoIsValido(inicioLocacao, fimLocacao)){
+				Carro carro = this.servicoDeCarro.buscaCarroPorPlaca(carroCustoDTO.getPlaca());
+				if(carroNaoLocalizadoOuIndisponivel(carro)) {
+					return false;
+				}
+				boolean devolucao = criaUmaDevolucao()
+			}
+		}
         return false;        
     }
 	
@@ -77,6 +89,12 @@ public class ControleDeLocacoes {
 	private void buscaCarroPorPlacaEAlteraStatusParaIndisponivel(Carro carro) {
 		Carro carroLocalizado = this.servicoDeCarro.buscaCarroPorPlaca(carro.getPlaca());
 		carroLocalizado.setDisponivel(false);
+		this.servicoDeCarro.atualiza(carro);
+	}
+
+	private void buscaCarroPorPlacaEAlteraStatusParaDisponivel(Carro carro) {
+		Carro carroLocalizado = this.servicoDeCarro.buscaCarroPorPlaca(carro.getPlaca());
+		carroLocalizado.setDisponivel(true);
 		this.servicoDeCarro.atualiza(carro);
 	}
 	
