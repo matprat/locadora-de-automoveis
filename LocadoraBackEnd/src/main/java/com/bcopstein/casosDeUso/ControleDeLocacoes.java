@@ -29,7 +29,7 @@ public class ControleDeLocacoes {
 		this.servicoDeCarro = servicoCarro;
 	}
 
-	
+
 	public Collection<CarroCustoDTO> pesquisarCarrosDisponiveis(FiltroDTO filtro) {
 		// TO DO
 		return null;
@@ -58,20 +58,18 @@ public class ControleDeLocacoes {
 		return false;
 	}
 	
-    public boolean devolveCarro(CarroCustoDTO carroCustoDTO){
-		try{
-			Date inicioLocacao = carroCustoDTO.getInicioLocacao().toDate();
-			Date fimLocacao = carroCustoDTO.getFimLocacao().toDate();
-
-			if(periodoDeLocacaoIsValido(inicioLocacao, fimLocacao)){
-				Carro carro = this.servicoDeCarro.buscaCarroPorPlaca(carroCustoDTO.getPlaca());
-				if(carroNaoLocalizadoOuIndisponivel(carro)) {
-					return false;
-				}
-				boolean devolucao = criaUmaDevolucao()
-			}
+    public boolean devolveCarro(String placa){
+		Carro carro = this.servicoDeCarro.buscaCarroPorPlaca(placa);
+		if(carroNaoLocalizadoOuIndisponivel(carro)){
+			return false;
 		}
-        return false;        
+		for(CarroCustoDTO locacao: todasLocacoes()){
+			if(locacao.getPlaca().toUpperCase().equals(placa.toUpperCase())){
+				 
+			}
+			
+		}
+		return false;
     }
 	
 	public List<CarroCustoDTO> todasLocacoes() {
@@ -101,5 +99,4 @@ public class ControleDeLocacoes {
 	private boolean criaUmaLocacaoNoRepositorio(CarroCustoDTO carroCustoDTO, Carro carro) {
 		return this.servicoDeLocacao.cadastrar(carroCustoDTO, carro);
 	}
-
 }
