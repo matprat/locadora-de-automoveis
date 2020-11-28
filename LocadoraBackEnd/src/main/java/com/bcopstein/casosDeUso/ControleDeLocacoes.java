@@ -21,18 +21,13 @@ public class ControleDeLocacoes {
 	
 	private LocacaoService servicoDeLocacao;
 	private CarroService servicoDeCarro;
-	private Carros carros;
 	
 	
 	@Autowired
-	public ControleDeLocacoes(LocacaoService servicoLocacao, CarroService servicoCarro, Carros carros) {
+	public ControleDeLocacoes(LocacaoService servicoLocacao, CarroService servicoCarro) {
 		this.servicoDeLocacao = servicoLocacao;
 		this.servicoDeCarro = servicoCarro;
 	}
-
-	public Collection<Carro> listaCarros() {
-        return carros.todos();
-    }
 	
 	public Collection<CarroCustoDTO> pesquisarCarrosDisponiveis(FiltroDTO filtro) {
 		// TO DO
@@ -63,18 +58,17 @@ public class ControleDeLocacoes {
 	}
 	
     public boolean devolveCarro(String placa){
-        for(Carro it: listaCarros()){ //passa na lista de carros
-            if(it.getPlaca().toUpperCase().equals(placa.toUpperCase()) && it.getStatusCarro() == false){ //verifica se existe algum carro com a placa igual e se esta ocupado
-                for(Aluguel alu: listaAlugueis()){//passa na lista de alugueis
-                    if(alu.getCarroAlugado().getPlaca().toUpperCase().equals(placa.toUpperCase()) && alu.isCarroDevolvido() == false){//procura em algueis por uma placa igual e verifica se o carro ja foi devolvido para aquele aluguel
-                        srvCarros.setCarroLivre(getCarro(placa).getPlaca());//coloca o carro como livre
-                        alu.carroDevolvido(true);//coloca no aluguel que o carro foi devolvido
-                        return true;                        
-                    }
-                }
-            }
-        }
-        return false;        
+		Carro carro = this.servicoDeCarro.buscaCarroPorPlaca(placa);
+		if(carroNaoLocalizadoOuIndisponivel(carro)){
+			return false;
+		}
+		for(CarroCustoDTO locacao: todasLocacoes()){
+			if(locacao.getPlaca().toUpperCase().equals(placa.toUpperCase())){
+				 
+			}
+			
+		}
+		return false;
     }
 	
 	public List<CarroCustoDTO> todasLocacoes() {
