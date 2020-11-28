@@ -58,17 +58,18 @@ public class ControleDeLocacoes {
 	}
 	
     public boolean devolveCarro(String placa){
+		try{
 		Carro carro = this.servicoDeCarro.buscaCarroPorPlaca(placa);
 		if(carroNaoLocalizadoOuIndisponivel(carro)){
 			return false;
 		}
 		for(CarroCustoDTO locacao: todasLocacoes()){
 			if(locacao.getPlaca().toUpperCase().equals(placa.toUpperCase())){
-				 
-			}
-			
+				carro.setDisponivel(true);
+			}	
 		}
 		return false;
+	}
     }
 	
 	public List<CarroCustoDTO> todasLocacoes() {
