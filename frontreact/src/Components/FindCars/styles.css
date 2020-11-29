@@ -15,6 +15,10 @@
   margin-right: 5px;
 }
 
+.select label {
+  margin-left: 5px;
+}
+
 button {
   margin: 10px;
   width: 100px;
@@ -24,6 +28,11 @@ button {
   color: #fff;
   border-radius: 5px;
   align-self: center;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #9ad3bc;
 }
 
 .card {
