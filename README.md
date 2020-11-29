@@ -1,3 +1,0 @@
-# locadora-de-automoveis
-
-Em desenvolvimento...
