@@ -37,6 +37,47 @@ function FindCars() {
         }
       });
   };
+
+  const rentalCar = (car) => {
+    api
+      .post("/confirma-locacao", {
+        arcondicionado: car.arCondicionado,
+        cambio: car.cambio,
+        custoLocacao: car.custoLocacao,
+        desconto: car.desconto,
+        direcao: car.direcao,
+        fimLocacao: {
+          dia: car.fimLocacao.dia,
+          mes: car.fimLocacao.mes,
+          ano: car.fimLocacao.ano,
+        },
+        inicioLocacao: {
+          dia: car.inicioLocacao.dia,
+          mes: car.inicioLocacao.mes,
+          ano: car.inicioLocacao.ano,
+        },
+        marca: car.marca,
+        modelo: car.modelo,
+        placa: car.placa,
+        seguro: car.seguro,
+        totalPagar: car.totalPagar,
+      })
+      .then(
+        (response) => {
+          if (response.data) {
+            alert(
+              `Locação do carro marca: ${car.marca}, modelo: ${car.modelo}, placa: ${car.placa} realizada com sucesso`
+            );
+            searchAvailableCars();
+          } else {
+            alert("Não foi possível locar este carro.");
+          }
+        },
+        (error) => {
+          alert("Ocorreu um erro na requisição");
+        }
+      );
+  };
   return (
     <div class="container">
       <div className="date">
@@ -61,31 +102,31 @@ function FindCars() {
         />
       </div>
       <div className="select">
-        <label htmlFor="arCondicionado">Ar condicionado</label>
         <input
           id="arCondicionado"
           type="radio"
           checked={containsAr}
           onClick={() => setContainsAr(!containsAr)}
         />
+        <label htmlFor="arCondicionado">Ar condicionado</label>
       </div>
       <div className="select">
-        <label htmlFor="cambio">Câmbio Automático</label>
         <input
           id="cambio"
           type="radio"
           checked={containsCambio}
           onClick={() => setContainsCambio(!containsCambio)}
         />
+        <label htmlFor="cambio">Câmbio Automático</label>
       </div>
       <div className="select">
-        <label htmlFor="direcao">Direção Hidráulica</label>
         <input
           id="direcao"
           type="radio"
           checked={containsDirecao}
           onClick={() => setContainsDirecao(!containsDirecao)}
         />
+        <label htmlFor="direcao">Direção Hidráulica</label>
       </div>
       <button onClick={searchAvailableCars}>Buscar carros</button>
       <div>
@@ -95,7 +136,7 @@ function FindCars() {
               <span>
                 {car.arCondicionado && "Ar Condicionado;"}
                 {car.direcao && " Direção Hidráulica;"}
-                {car.cambio && " Câmio Automático"}
+                {car.cambio && " Câmbio Automático"}
               </span>
               <span>Marca : {car.marca}</span>
               <span>Modelo : {car.modelo}</span>
@@ -114,6 +155,7 @@ function FindCars() {
                   currency: "BRL",
                 })}
               </span>
+              <button onClick={() => rentalCar(car)}>Locar Carro</button>
             </div>
           ))}
       </div>
