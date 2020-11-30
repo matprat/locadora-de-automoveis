@@ -70,10 +70,16 @@ public class LocadoraController {
     });
     return informacoes;
   }
+  
+  @PostMapping("/devolve-carro")
+  @CrossOrigin(origins = "*")
+  public boolean devolveCarro(@RequestBody final CarroDTO carro) {
+    return this.controleDeLocacoes.devolveCarro(carro.getPlaca());
+  }
 
   @PostMapping("/confirma-locacao")
   @CrossOrigin(origins = "*")
-  public boolean confirmaLocacao(@RequestBody final CarroCustoDTO carro) {
+  public boolean confirmaLocacao(@RequestBody CarroCustoDTO carro) {
     return this.controleDeLocacoes.alugarCarro(carro);
   }
 

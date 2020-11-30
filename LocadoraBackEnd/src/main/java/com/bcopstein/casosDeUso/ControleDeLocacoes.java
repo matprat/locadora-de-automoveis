@@ -10,6 +10,7 @@ import com.bcopstein.entidades.CarroService;
 import com.bcopstein.entidades.Locacao;
 import com.bcopstein.entidades.LocacaoService;
 import com.bcopstein.interfaces.CarroCustoDTO;
+import com.bcopstein.interfaces.CarroDTO;
 import com.bcopstein.interfaces.FiltroDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,17 +60,21 @@ public class ControleDeLocacoes {
 	
     public boolean devolveCarro(String placa){
 		try{
-		Carro carro = this.servicoDeCarro.buscaCarroPorPlaca(placa);
-		if(carroNaoLocalizadoOuIndisponivel(carro)){
-			return false;
-		}
-		for(CarroCustoDTO locacao: todasLocacoes()){
-			if(locacao.getPlaca().toUpperCase().equals(placa.toUpperCase())){
-				carro.setDisponivel(true);
-			}	
+//			Carro carro = this.servicoDeCarro.buscaCarroPorPlaca(placa);
+//			System.out.println(carro);
+//			if(carroNaoLocalizadoOuIndisponivel(carro)){
+//				return false;
+//			}
+			buscaCarroPorPlacaEAlteraStatusParaDisponivel(placa);
+
+//			for(CarroCustoDTO locacao: todasLocacoes()){
+//				if(locacao.getPlaca().toUpperCase().equals(placa.toUpperCase())){
+//				}	
+//			}
+		}catch(NullPointerException e) {
+			e.printStackTrace();
 		}
 		return false;
-	}
     }
 	
 	public List<CarroCustoDTO> todasLocacoes() {
@@ -88,6 +93,12 @@ public class ControleDeLocacoes {
 		Carro carroLocalizado = this.servicoDeCarro.buscaCarroPorPlaca(carro.getPlaca());
 		carroLocalizado.setDisponivel(false);
 		this.servicoDeCarro.atualiza(carro);
+	}
+	private void buscaCarroPorPlacaEAlteraStatusParaDisponivel(String placa) {
+	
+		Carro carroLocalizado = this.servicoDeCarro.buscaCarroPorPlaca(placa);
+		carroLocalizado.setDisponivel(true);
+		this.servicoDeCarro.atualiza(carroLocalizado);
 	}
 	
 	private boolean criaUmaLocacaoNoRepositorio(CarroCustoDTO carroCustoDTO, Carro carro) {
