@@ -52,6 +52,8 @@ public class LocadoraController {
     List<CarroCustoDTO> informacoes = new ArrayList<>(disponiveis.size());
     // Não está calculando o valor das diárias, seguro, desconto ou total
     disponiveis.forEach(c->{
+    if(c.getDisponivel()) {
+    	
       informacoes.add(new CarroCustoDTO(filtro.getInicioLocacao(),
                                         filtro.getFimLocacao(),
                                         c.getPlaca(),
@@ -64,13 +66,20 @@ public class LocadoraController {
                                         100.0,  // Custo do seguro
                                         200.0,  // Total do desconto
                                         900.0)); // Valor a pagar
+    }
     });
     return informacoes;
+  }
+  
+  @PostMapping("/devolve-carro")
+  @CrossOrigin(origins = "*")
+  public boolean devolveCarro(@RequestBody final CarroDTO carro) {
+    return this.controleDeLocacoes.devolveCarro(carro.getPlaca());
   }
 
   @PostMapping("/confirma-locacao")
   @CrossOrigin(origins = "*")
-  public boolean confirmaLocacao(@RequestBody final CarroCustoDTO carro) {
+  public boolean confirmaLocacao(@RequestBody CarroCustoDTO carro) {
     return this.controleDeLocacoes.alugarCarro(carro);
   }
 
