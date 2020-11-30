@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./styles.css";
 import api from "../../services/api";
 import DatePicker from "react-datepicker";
@@ -25,7 +26,7 @@ function FindCars() {
 
     api
       .get(
-        `carros-disponiveis/?inicioLocacao.dia=${initalDay}&inicioLocacao.mes=${initialMonth}&inicioLocacao.ano=${initialYear}&fimLocacao.dia=${finalDay}&fimLocacao.mes=${finalMonth}&fimLocacao.ano=${finalYear}&arcondicionado=${containsAr}&direcao=${containsDirecao}&cambio=${containsCambio}`
+        `carros-disponiveis?inicioLocacao.dia=${initalDay}&inicioLocacao.mes=${initialMonth}&inicioLocacao.ano=${initialYear}&fimLocacao.dia=${finalDay}&fimLocacao.mes=${finalMonth}&fimLocacao.ano=${finalYear}&arcondicionado=${containsAr}&direcao=${containsDirecao}&cambio=${containsCambio}`
       )
       .then((response) => {
         if (response.data) {
@@ -79,7 +80,8 @@ function FindCars() {
       );
   };
   return (
-    <div class="container">
+    <div className="container">
+      <Link to="/">Voltar </Link>
       <div className="date">
         <label>Data Inicial:</label>
         <DatePicker
@@ -155,7 +157,7 @@ function FindCars() {
                   currency: "BRL",
                 })}
               </span>
-              <button onClick={() => rentalCar(car)}>Locar Carro</button>
+              <button onClick={() => rentalCar(car)}>Locar carro</button>
             </div>
           ))}
       </div>
