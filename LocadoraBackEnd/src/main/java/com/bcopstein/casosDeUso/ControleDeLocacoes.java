@@ -77,7 +77,7 @@ public class ControleDeLocacoes {
 	}
 	
 	public List<CarroCustoDTO> locacoesVigentes() {
-		return this.servicoDeLocacao.todos();
+		return this.servicoDeLocacao.vigentes();
 	}
 	
 	private boolean periodoDeLocacaoIsValido(Date dataInicial, Date dataFinal) {

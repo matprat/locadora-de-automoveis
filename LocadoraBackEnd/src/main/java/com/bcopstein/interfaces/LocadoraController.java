@@ -39,6 +39,12 @@ public class LocadoraController {
     return this.controleDeLocacoes.todasLocacoes();
   }
 
+  @GetMapping("/locacoes-vigentes")
+  @CrossOrigin(origins = "*")
+  public Collection<CarroCustoDTO> locacoesVigentes() {
+    return this.controleDeLocacoes.locacoesVigentes();
+  }
+  
   @GetMapping("/carros-disponiveis")
   @CrossOrigin(origins = "*")
   public List<CarroCustoDTO> carrosDisponiveis(FiltroDTO filtro) {

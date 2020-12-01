@@ -18,12 +18,14 @@ public class LocacaoService {
 	private IRepositorioLocacoes locacoes;
 	private IRepositorioCarros carros;
 	private FactoryDesconto factoryDesconto;
+	private CarroService servicoDeCarro;
 	
 	@Autowired
-	public LocacaoService(IRepositorioLocacoes locacoes, IRepositorioCarros carros, FactoryDesconto factoryDesconto) {
+	public LocacaoService(IRepositorioLocacoes locacoes, IRepositorioCarros carros, FactoryDesconto factoryDesconto, CarroService servicoCarro) {
 		this.locacoes = locacoes;
 		this.carros = carros;
 		this.factoryDesconto = factoryDesconto;
+		this.servicoDeCarro = servicoCarro;
 	}
 	
 	public boolean cadastrar(CarroCustoDTO carroCustoDTO, Carro carro) {
@@ -56,6 +58,18 @@ public class LocacaoService {
 		List<CarroCustoDTO> todasLocacoes = new ArrayList<>(locacoesCadastradas.size());
 		for(Locacao locacao: locacoesCadastradas) {
 			todasLocacoes.add(locacao.toCarroCustoDTO());
+		}
+		return todasLocacoes;
+	}
+	
+	public List<CarroCustoDTO> vigentes() {
+		Collection<Locacao> locacoesCadastradas = this.locacoes.todos();
+		List<CarroCustoDTO> todasLocacoes = new ArrayList<>(locacoesCadastradas.size());
+		for(Locacao locacao: locacoesCadastradas) {
+			boolean disponivel = this.servicoDeCarro.buscaCarroPorPlaca(locacao.getPlaca()).getDisponivel();
+			if(!disponivel) {
+				todasLocacoes.add(locacao.toCarroCustoDTO());				
+			}
 		}
 		return todasLocacoes;
 	}
