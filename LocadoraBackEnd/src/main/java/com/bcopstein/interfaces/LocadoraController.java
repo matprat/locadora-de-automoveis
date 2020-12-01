@@ -48,33 +48,7 @@ public class LocadoraController {
   @GetMapping("/carros-disponiveis")
   @CrossOrigin(origins = "*")
   public List<CarroCustoDTO> carrosDisponiveis(FiltroDTO filtro) {
-    // Está selecionando apenas pelos equipamentos
-    // Não está verificando se o carro está livre naquelas datas
-    List<Carro> disponiveis = this.controleDeCarros.todos().stream()
-      .filter(c->c.isArcondicionado() == filtro.isArcondicionado())
-      .filter(c->c.isDirecao() == filtro.isDirecao())
-      .filter(c->c.isCambioautomatico() == filtro.isCambio())
-      .collect(Collectors.toList());
-    List<CarroCustoDTO> informacoes = new ArrayList<>(disponiveis.size());
-    // Não está calculando o valor das diárias, seguro, desconto ou total
-    disponiveis.forEach(c->{
-    if(c.getDisponivel()) {
-    	
-      informacoes.add(new CarroCustoDTO(filtro.getInicioLocacao(),
-                                        filtro.getFimLocacao(),
-                                        c.getPlaca(),
-                                        c.getMarca(),
-                                        c.getModelo(),
-                                        c.isArcondicionado(),
-                                        c.isDirecao(),
-                                        c.isCambioautomatico(),
-                                        1000.0, // Total das diárias
-                                        100.0,  // Custo do seguro
-                                        200.0,  // Total do desconto
-                                        900.0)); // Valor a pagar
-    }
-    });
-    return informacoes;
+    return this.controleDeCarros.carrosDisponiveis(filtro);
   }
   
   @PostMapping("/devolve-carro")
