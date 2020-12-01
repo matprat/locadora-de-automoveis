@@ -54,18 +54,20 @@ public class Locacao {
     }
     
     public DataLocal getInicioLocacao() {
+    	Date dataParse = new Date(this.inicioLocacao.getTime());
     	DataLocal data = new DataLocal();
-    	data.setDia(this.inicioLocacao.getDay());
-    	data.setMes(this.inicioLocacao.getMonth());
-    	data.setAno(this.inicioLocacao.getYear());
+    	data.setDia(dataParse.getDate());
+    	data.setMes(dataParse.getMonth()+1);
+    	data.setAno(dataParse.getYear()+1900);
         return data;
     }
     
     public DataLocal getFimLocacao() {
+    	Date dataParse = new Date(this.fimLocacao.getTime());
     	DataLocal data = new DataLocal();
-    	data.setDia(this.inicioLocacao.getDay());
-    	data.setMes(this.inicioLocacao.getMonth());
-    	data.setAno(this.inicioLocacao.getYear());
+    	data.setDia(dataParse.getDate());
+    	data.setMes(dataParse.getMonth()+1);
+    	data.setAno(dataParse.getYear()+1900);
         return data;
     }
    
