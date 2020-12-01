@@ -7,6 +7,9 @@ public class CarroDTO {
         this.placa = placa;
     }
 
+    public CarroDTO(){
+        
+    }
    
     public String getPlaca() {
         return placa;
