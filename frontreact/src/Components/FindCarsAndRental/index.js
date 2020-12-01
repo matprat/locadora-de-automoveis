@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "./styles.css";
+import { useHistory } from "react-router-dom";
 import api from "../../services/api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale } from "react-datepicker";
 import pt from "date-fns/locale/pt-BR";
+import {
+  Container,
+  Card,
+  SearchCar,
+  Content,
+  Buttons,
+  Title,
+  Text,
+} from "./styles";
 registerLocale("pt", pt);
 
 function FindCars() {
@@ -15,6 +23,7 @@ function FindCars() {
   const [containsCambio, setContainsCambio] = useState(false);
   const [containsDirecao, setContainsDirecao] = useState(false);
   const [cars, setCars] = useState([]);
+  const history = useHistory();
 
   const searchAvailableCars = () => {
     const initalDay = initialDate.getDate();
@@ -30,8 +39,11 @@ function FindCars() {
       )
       .then((response) => {
         if (response.data) {
+          let aux = response.data;
+          aux.hasCars = true;
           setCars(response.data);
         } else {
+          setCars([{ hasCars: false }]);
           alert(
             "Ocorreu um erro ao tentar realizar o serviço, por favor contate o suporte."
           );
@@ -80,88 +92,126 @@ function FindCars() {
       );
   };
   return (
-    <div className="container">
-      <Link to="/">Voltar </Link>
-      <div className="date">
-        <label>Data Inicial:</label>
-        <DatePicker
-          selected={initialDate}
-          locale="pt"
-          dateFormat="dd/MM/yyyy"
-          minDate={new Date()}
-          onChange={(date) => setInitialDate(date)}
-        />
-      </div>
+    <Container>
+      <Title>Escolha a data da locação</Title>
+      <SearchCar>
+        <div className="date">
+          <label>Data Inicial:</label>
+          <DatePicker
+            selected={initialDate}
+            locale="pt"
+            dateFormat="dd/MM/yyyy"
+            minDate={new Date()}
+            onChange={(date) => setInitialDate(date)}
+          />
+        </div>
 
-      <div className="date">
-        <label>Data Final:</label>
-        <DatePicker
-          selected={finalDate}
-          locale="pt"
-          dateFormat="dd/MM/yyyy"
-          minDate={new Date()}
-          onChange={(date) => setFinalDate(date)}
-        />
-      </div>
-      <div className="select">
-        <input
-          id="arCondicionado"
-          type="radio"
-          checked={containsAr}
-          onClick={() => setContainsAr(!containsAr)}
-        />
-        <label htmlFor="arCondicionado">Ar condicionado</label>
-      </div>
-      <div className="select">
-        <input
-          id="cambio"
-          type="radio"
-          checked={containsCambio}
-          onClick={() => setContainsCambio(!containsCambio)}
-        />
-        <label htmlFor="cambio">Câmbio Automático</label>
-      </div>
-      <div className="select">
-        <input
-          id="direcao"
-          type="radio"
-          checked={containsDirecao}
-          onClick={() => setContainsDirecao(!containsDirecao)}
-        />
-        <label htmlFor="direcao">Direção Hidráulica</label>
-      </div>
-      <button onClick={searchAvailableCars}>Buscar carros</button>
-      <div>
-        {cars &&
+        <div className="date">
+          <label>Data Final:</label>
+          <DatePicker
+            selected={finalDate}
+            locale="pt"
+            dateFormat="dd/MM/yyyy"
+            minDate={new Date()}
+            onChange={(date) => setFinalDate(date)}
+          />
+        </div>
+        <div className="select">
+          <input
+            id="arCondicionado"
+            type="radio"
+            checked={containsAr}
+            onClick={() => setContainsAr(!containsAr)}
+          />
+          <label htmlFor="arCondicionado">Ar condicionado</label>
+        </div>
+        <div className="select">
+          <input
+            id="cambio"
+            type="radio"
+            checked={containsCambio}
+            onClick={() => setContainsCambio(!containsCambio)}
+          />
+          <label htmlFor="cambio">Câmbio Automático</label>
+        </div>
+        <div className="select">
+          <input
+            id="direcao"
+            type="radio"
+            checked={containsDirecao}
+            onClick={() => setContainsDirecao(!containsDirecao)}
+          />
+          <label htmlFor="direcao">Direção Hidráulica</label>
+        </div>
+        <Buttons>
+          <button onClick={() => history.push("/")}>Voltar</button>
+          <button onClick={searchAvailableCars}>Buscar carros</button>
+        </Buttons>
+      </SearchCar>
+      <Content>
+        {cars.length > 0 ? (
           cars.map((car) => (
-            <div className="card">
+            <Card>
               <span>
+                <strong>Diferencial:</strong>
                 {car.arCondicionado && "Ar Condicionado;"}
                 {car.direcao && " Direção Hidráulica;"}
                 {car.cambio && " Câmbio Automático"}
+                {!car.arCondicionado &&
+                  !car.direcao &&
+                  !car.cambio &&
+                  " Nenhum"}
               </span>
-              <span>Marca : {car.marca}</span>
-              <span>Modelo : {car.modelo}</span>
-              <span>Placa : {car.placa}</span>
               <span>
-                Seguro :{" "}
+                <strong>Marca:</strong> {car.marca}
+              </span>
+              <span>
+                <strong>Modelo:</strong> {car.modelo}
+              </span>
+              <span>
+                <strong>Placa:</strong> {car.placa}
+              </span>
+              <span>
+                <strong>Custo da Locação:</strong>{" "}
+                {car.custoLocacao.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </span>
+              <span>
+                <strong>Desconto:</strong>{" "}
+                {car.desconto.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </span>
+              <span>
+                <strong>Seguro:</strong>{" "}
                 {car.seguro.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
               </span>
               <span>
-                Total :{" "}
+                <strong>Total: </strong>{" "}
                 {car.totalPagar.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
               </span>
-              <button onClick={() => rentalCar(car)}>Locar carro</button>
-            </div>
-          ))}
-      </div>
-    </div>
+              <Buttons>
+                <button onClick={() => rentalCar(car)}>Locar carro</button>
+              </Buttons>
+            </Card>
+          ))
+        ) : (
+          <Text>
+            Nenhum carro selecionado ou não há carros com as características
+            escolhidas disponíveis.
+          </Text>
+        )}
+      </Content>
+    </Container>
   );
 }
 

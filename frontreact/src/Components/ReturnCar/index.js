@@ -1,11 +1,17 @@
 import React from "react";
 import { useState } from "react";
 import api from "../../services/api";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import {
+  Container,
+  Title,
+  Buttons,
+  SearchCar,
+} from "../FindCarsAndRental/styles";
 
 function ReturnCar() {
   const [placa, setPlaca] = useState("");
-
+  const history = useHistory();
   const returnACar = () => {
     api.post(`/devolve-carro`, { placa }).then(
       (response) => {
@@ -22,13 +28,23 @@ function ReturnCar() {
   };
 
   return (
-    <div>
-      <Link to="/">Voltar </Link>
+    <Container>
+      <Buttons>
+        <button onClick={() => history.push("/")}>Voltar </button>
+      </Buttons>
 
-      <span>Digite a placa que do carro que deseja devolver</span>
-      <input value={placa} onChange={(event) => setPlaca(event.target.value)} />
-      <button onClick={returnACar}>Devolver carro</button>
-    </div>
+      <Title>Digite a placa que do carro que deseja devolver</Title>
+      <SearchCar>
+        <input
+          value={placa}
+          placeholder="placa"
+          onChange={(event) => setPlaca(event.target.value)}
+        />
+        <Buttons>
+          <button onClick={returnACar}>Devolver carro</button>
+        </Buttons>
+      </SearchCar>
+    </Container>
   );
 }
 

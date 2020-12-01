@@ -1,6 +1,6 @@
 import React from "react";
-import { Container, Content, Card, Title } from "./styles";
-
+import { Container, Content, Card, Title, Image, Image2 } from "./styles";
+import car from "../../assets/car.svg";
 function Main() {
   return (
     <Container>
@@ -10,6 +10,7 @@ function Main() {
         <Card to="/ListRentals"> Listar Aluguéis</Card>
         <Card to="/ReturnACar"> Devolver carro</Card>
       </Content>
+      <Image src={car} alt="Ilustração de um carro" />
     </Container>
   );
 }
