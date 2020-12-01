@@ -59,22 +59,16 @@ public class ControleDeLocacoes {
 	}
 	
     public boolean devolveCarro(String placa){
-		try{
-//			Carro carro = this.servicoDeCarro.buscaCarroPorPlaca(placa);
-//			System.out.println(carro);
-//			if(carroNaoLocalizadoOuIndisponivel(carro)){
-//				return false;
-//			}
-			buscaCarroPorPlacaEAlteraStatusParaDisponivel(placa);
-
-//			for(CarroCustoDTO locacao: todasLocacoes()){
-//				if(locacao.getPlaca().toUpperCase().equals(placa.toUpperCase())){
-//				}	
-//			}
-		}catch(NullPointerException e) {
-			e.printStackTrace();
+    	try {
+			Carro carro = buscaCarroPorPlacaEAlteraStatusParaDisponivel(placa);
+			if(carro.getDisponivel()== true) return false;
+			if(!carroNaoLocalizadoOuIndisponivel(carro)) return true;
+			
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return false;
 		}
-		return false;
+    	return false;
     }
 	
 	public List<CarroCustoDTO> todasLocacoes() {
@@ -94,11 +88,12 @@ public class ControleDeLocacoes {
 		carroLocalizado.setDisponivel(false);
 		this.servicoDeCarro.atualiza(carro);
 	}
-	private void buscaCarroPorPlacaEAlteraStatusParaDisponivel(String placa) {
+	private Carro buscaCarroPorPlacaEAlteraStatusParaDisponivel(String placa) {
 	
 		Carro carroLocalizado = this.servicoDeCarro.buscaCarroPorPlaca(placa);
 		carroLocalizado.setDisponivel(true);
 		this.servicoDeCarro.atualiza(carroLocalizado);
+		return carroLocalizado;
 	}
 	
 	private boolean criaUmaLocacaoNoRepositorio(CarroCustoDTO carroCustoDTO, Carro carro) {
