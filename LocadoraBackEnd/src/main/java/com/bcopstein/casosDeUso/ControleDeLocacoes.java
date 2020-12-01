@@ -60,10 +60,11 @@ public class ControleDeLocacoes {
 	
     public boolean devolveCarro(String placa){
     	try {
-			Carro carro = buscaCarroPorPlacaEAlteraStatusParaDisponivel(placa);
-			if(carro.getDisponivel()== true) return false;
+			Carro carro = this.servicoDeCarro.buscaCarroPorPlaca(placa);
+			if(carro.getDisponivel()==true) return false;
+			buscaCarroPorPlacaEAlteraStatusParaDisponivel(placa);
+			System.out.println(carro);
 			if(!carroNaoLocalizadoOuIndisponivel(carro)) return true;
-			
     	} catch (Exception e) {
     		e.printStackTrace();
     		return false;
@@ -72,6 +73,10 @@ public class ControleDeLocacoes {
     }
 	
 	public List<CarroCustoDTO> todasLocacoes() {
+		return this.servicoDeLocacao.todos();
+	}
+	
+	public List<CarroCustoDTO> locacoesVigentes() {
 		return this.servicoDeLocacao.todos();
 	}
 	
