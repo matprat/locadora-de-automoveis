@@ -13,7 +13,7 @@ function ListRentals() {
   const [rentals, setRentals] = useState([]);
   const history = useHistory();
   const loadRentals = () => {
-    api.get("todas-locacoes").then(
+    api.get("locacoes-vigentes").then(
       (response) => {
         if (response.data) {
           setRentals(response.data);
